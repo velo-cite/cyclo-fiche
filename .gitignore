@@ -1,0 +1,5 @@
+/resources/pictures/
+/logs/velobs.log
+/.htpasswd
+/velociterdcyclof_mysql_db.sql
+.idea/

@@ -1,0 +1,60 @@
+services:
+  web:
+    image: php:5.6-apache
+    build:
+      context: .
+    ports:
+      - "80:80"  # Le port 8080 local est mappé au port 80 du conteneur
+      - "443:443"
+    volumes:
+      - .:/var/www/html  # Le code source est monté dans le dossier /var/www/html
+      - ./apache-config.conf:/etc/apache2/sites-available/000-default.conf # Configuration Apache personnalisée
+    environment:
+      - APACHE_LOG_DIR=/var/log/apache2
+    networks:
+      - mynetwork
+    restart: always
+    command: /bin/bash -c "a2enmod rewrite && apache2-foreground"
+    depends_on:
+      - db
+    links:
+      - db
+
+  # Exemple pour ajouter une base de données MySQL, optionnel
+  db:
+    image: mysql:8.0.3
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - mynetwork
+    restart: always
+    command: [ 'mysqld', '--character-set-server=latin1', '--collation-server=latin1_swedish_ci' ]
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: user
+      PMA_PASSWORD: password
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+    networks:
+      - mynetwork
+    restart: always
+    depends_on:
+      - db
+    links:
+      - db
+
+volumes:
+  db_data:
+
+networks:
+  mynetwork:

@@ -1,0 +1,19 @@
+.header__logo-wrapper {
+    text-align : center;
+}
+
+.header__logo--velocite {
+    height : 100%;
+}
+
+.header__slogan {
+    font-size : 22px;
+}
+
+.header__button-wrapper {
+    text-align : center;
+}
+
+.header__description {
+    font-size : 14px;
+}

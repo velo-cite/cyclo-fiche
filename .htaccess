@@ -1,0 +1,7 @@
+#AuthUserFile /home/velociterd/velobs/.htpasswd
+#AuthGroupFile /dev/null
+#AuthName "Accès protégé"
+#AuthType basic
+#require valid-user
+
+Options +Indexes
