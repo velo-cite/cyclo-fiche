@@ -923,8 +923,10 @@ Veuillez consulter l'interface d'administration pour consulter les informations 
 				}else{
 					//aucune mise à jour n'a été effectuée, car aucune information n'a été modifiée
 					echo 2;
-				}		
-				mysql_free_result($result);
+				}
+				if ($result instanceof mysqli_result) {
+					mysql_free_result($result);
+				}
 				mysql_close($link);
 				break;
 			case 'postgresql':
