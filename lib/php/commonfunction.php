@@ -34,7 +34,7 @@
 				}
 				//détermination de la commune concernée par croisement du polygone de la commune avec latitude et longitude				
 				$commune_id_commune = 99999;
-				$sql = "SELECT id_commune, AsText(geom_commune) AS geom, lib_commune FROM commune";
+				$sql = "SELECT id_commune, st_AsText(geom_commune) AS geom, lib_commune FROM commune";
 				$result = mysql_query($sql);
 				while ($row = mysql_fetch_array($result)) {
 					if (isWithinPolygons($row['geom'], $latitude_poi, $longitude_poi)) {												
@@ -45,7 +45,7 @@
 				}								
 				//détermination du pole concerné par croisement du polygone du pole avec latitude et longitude
 				$pole_id_pole = 9;
-				$sql = "SELECT id_pole, AsText(geom_pole) AS geom, lib_pole FROM pole";
+				$sql = "SELECT id_pole, st_asText(geom_pole) AS geom, lib_pole FROM pole";
 				$result = mysql_query($sql);
 				while ($row = mysql_fetch_array($result)) {
 					if (isWithinPolygons($row['geom'], $latitude_poi, $longitude_poi)){	
@@ -208,8 +208,8 @@
 		$sql = "SELECT poi.*, 
 					commune.id_commune, 
 					commune.lib_commune, 
-					x(poi.geom_poi) AS longitude_poi, 
-					y(poi.geom_poi) AS latitude_poi,
+					st_x(poi.geom_poi) AS longitude_poi, 
+					st_y(poi.geom_poi) AS latitude_poi,
 					subcategory.id_subcategory, 
 					subcategory.icon_subcategory, 
 					subcategory.lib_subcategory, 
@@ -512,7 +512,7 @@
 					if ($arrayColumns[$i]['dataType'] == 'position'){
 						if ($positionAlreadyMoidified != 1){
 							//les latitude et longitude stockés sous forme d'un point par POI, et non pas comme 2 champs distincts
-							$sqlUpdate .= ", geom_poi = GeomFromText('POINT(".$_POST['longitude_poi']." ".$_POST['latitude_poi'].")')";
+							$sqlUpdate .= ", geom_poi = st_GeomFromText('POINT(".$_POST['longitude_poi']." ".$_POST['latitude_poi'].")')";
 							$positionAlreadyMoidified = 1;
 						}
 						

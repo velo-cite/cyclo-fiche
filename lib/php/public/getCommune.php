@@ -7,7 +7,7 @@
 			mysql_select_db(DB_NAME);
 			mysql_query("SET NAMES utf8mb4");
 			
-			$sql = "SELECT id_commune, lib_commune, AsText(geom_commune) AS geom FROM commune ORDER BY lib_commune ASC";
+			$sql = "SELECT id_commune, lib_commune, st_AsText(geom_commune) AS geom FROM commune ORDER BY lib_commune ASC";
 			$result = mysql_query($sql);
 			$i = 0;
 			while ($row = mysql_fetch_array($result)){
