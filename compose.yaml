@@ -13,7 +13,6 @@ services:
       - APACHE_LOG_DIR=/var/log/apache2
     networks:
       - mynetwork
-    restart: always
     command: /bin/bash -c "a2enmod rewrite && apache2-foreground"
     depends_on:
       - db
@@ -32,7 +31,6 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - mynetwork
-    restart: always
     command: [ 'mysqld', '--character-set-server=latin1', '--collation-server=latin1_swedish_ci' ]
 
   phpmyadmin:
@@ -47,7 +45,6 @@ services:
       - "8081:80"
     networks:
       - mynetwork
-    restart: always
     depends_on:
       - db
     links:
