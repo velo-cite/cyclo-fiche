@@ -75,8 +75,8 @@
 											priorite.lib_priorite, 
 											pole.lib_pole, 
 											status.lib_status,
-											x(poi.geom_poi) AS X, 
-											y(poi.geom_poi) AS Y, 
+											st_x(poi.geom_poi) AS X, 
+											st_y(poi.geom_poi) AS Y, 
 											lib_category, 
 											lib_subcategory, 
 											lib_commune 
